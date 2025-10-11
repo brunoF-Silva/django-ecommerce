@@ -1,3 +1,17 @@
+''' This module contains the admin configurations for the products app '''
 from django.contrib import admin
+from . import models
 
-# Register your models here.
+class VariationInline(admin.TabularInline):
+    ''' Variation inline admin '''
+    model = models.Variation
+    extra = 1
+
+class ProductAdmin(admin.ModelAdmin):
+    ''' Product admin '''
+    inilines = [
+        VariationInline
+    ]
+
+admin.site.register(models.Product)
+admin.site.register(models.Variation)
