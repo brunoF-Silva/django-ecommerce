@@ -9,9 +9,9 @@ class VariationInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     ''' Product admin '''
-    inilines = [
+    inlines = [
         VariationInline
     ]
 
-admin.site.register(models.Product)
+admin.site.register(models.Product, ProductAdmin)
 admin.site.register(models.Variation)
