@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'products',
     'orders',
+    'profiles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -119,8 +120,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 # LANGUAGE_CODE = 'pt-BR'
 
-# TIME_ZONE = 'America/Sao_Paulo'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
+# TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
