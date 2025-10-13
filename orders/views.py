@@ -3,9 +3,9 @@ from django.views import View
 from django.views.generic import DetailView
 from django.http import HttpResponse
 
-class PayView(View):
+class PaymentView(View):
     def get(self, *args, **kwargs):
-        return HttpResponse("Pay")
+        return HttpResponse("Payment")
 
 class PlaceOrderView(View):
     def get(self, *args, **kwargs):

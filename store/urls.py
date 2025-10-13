@@ -29,7 +29,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-] + debug_toolbar_urls() # TODO: remover debug toolbar
+# TODO: remover debug toolbar
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
