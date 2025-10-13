@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views import View
@@ -7,6 +8,8 @@ from .import models
 class ProductListView(ListView):
     model = models.Product
     template_name = "product/product_list.html"
+    context_object_name = "products"
+    paginate_by = 10
 
 class ProductDetailView(View):
     def get(self, *args, **kwargs):
