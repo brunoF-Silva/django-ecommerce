@@ -81,10 +81,13 @@ class Product(models.Model):
 class Variation(models.Model):
     ''' Product variation model '''
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, blank=True, null=True)
     price = models.FloatField()
     promotional_price = models.FloatField(default=0)
     stock = models.PositiveIntegerField(default=1)
     
     def __str__(self):
-        return f"{self.name}" or f"{self.product.name}"
+        print(f"!!!!!!!!!!!!!!{self.product.name}")
+        return self.name or self.product.name
+    
+
