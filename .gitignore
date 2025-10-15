@@ -11,4 +11,10 @@ __pycache__/
 # Django specific
 db.sqlite3
 /media/
-/static/
+/static/assets/bootstrap/
+/static/assets/font-awesome/
+/staticfiles/
+/static/libs/
+
+# Node
+/node_modules

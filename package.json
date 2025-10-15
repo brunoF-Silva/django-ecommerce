@@ -1,0 +1,22 @@
+{
+  "name": "django-ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "mkdirp static/libs/bootstrap/css static/libs/bootstrap/js static/libs/fontawesome/css static/libs/fontawesome/webfonts && cpx \"node_modules/bootstrap/dist/css/bootstrap.min.css\" \"static/libs/bootstrap/css\" && cpx \"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js\" \"static/libs/bootstrap/js\" && cpx \"node_modules/@fortawesome/fontawesome-free/css/all.min.css\" \"static/libs/fontawesome/css\" && cpx \"node_modules/@fortawesome/fontawesome-free/webfonts/*\" \"static/libs/fontawesome/webfonts\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.1.0",
+    "bootstrap": "^5.3.8"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "mkdirp": "^3.0.1",
+    "shx": "^0.3.4"
+  }
+}
+
