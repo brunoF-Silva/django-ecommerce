@@ -145,7 +145,10 @@ class RemoveFromCartView(View):
         return HttpResponse("RemoveFromCart")
 class CartView(View):
     def get(self, *args, **kwargs):
-        return render(self.request, 'product/cart.html')
+        context = {
+            'cart': self.request.session.get('cart', {})
+        }
+        return render(self.request, 'product/cart.html', context)
 class CheckOutView(View):
     def get(self, *args, **kwargs):
         return HttpResponse("CheckOut")
