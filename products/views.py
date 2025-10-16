@@ -1,10 +1,11 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views import View
 from django.http import HttpResponse
 from .import models
+from django.contrib import messages
 
 class ProductListView(ListView):
     model = models.Product
@@ -20,8 +21,24 @@ class ProductDetailView(DetailView):
 
 
 class AddToCartView(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse("AddToCart")
+    
+    def get(self, *arg, **kwargs):
+        http_referer = self.request.META.get(
+            'HTTP_REFERER',
+            reverse('product:list')
+            )
+        variation_id = self.request.GET.get('vid')
+        
+        if not variation_id:
+            messages.error(
+                self.request,
+                'Non-existent product'
+            )
+            return redirect(http_referer)
+
+        variation = get_object_or_404(models.Variation, id=variation_id)
+
+        return HttpResponse(f'{variation.product} {variation.name}')
 
 class RemoveFromCartView(View):
     def get(self, *args, **kwargs):
