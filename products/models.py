@@ -4,9 +4,8 @@ import os
 from django.db import models
 from django.conf import settings
 from PIL import Image
-
-from django.utils.text import slugify
 from utils import utils
+from django.utils.text import slugify
 
 class Product(models.Model):
     ''' Product model '''
@@ -87,7 +86,6 @@ class Variation(models.Model):
     stock = models.PositiveIntegerField(default=1)
     
     def __str__(self):
-        print(f"!!!!!!!!!!!!!!{self.product.name}")
         return self.name or self.product.name
     
 
