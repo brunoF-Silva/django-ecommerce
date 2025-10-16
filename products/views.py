@@ -6,8 +6,7 @@ cart functionality. It includes class-based views for the main product
 catalog (list and detail pages) and views to handle user interactions with
 the session-based shopping cart, such as adding or removing items.
 """
-from pprint import pprint
-from django.shortcuts import redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views import View
@@ -47,9 +46,9 @@ class AddToCartView(View):
         Handles the GET request to add an item to the cart. Redirects the
         user back to their previous page with a success or error message.
         """
-        if self.request.session.get('cart'):
-            del self.request.session['cart']
-            self.request.session.save()
+        # if self.request.session.get('cart'):
+        #     del self.request.session['cart']
+        #     self.request.session.save()
             
         http_referer = self.request.META.get(
             'HTTP_REFERER',
@@ -94,25 +93,18 @@ class AddToCartView(View):
             self.request.session['cart'] = {}
             self.request.session.save()
             
-            print('criu do zero um car')
-        print('saiu da criaçaõ')
-
         cart = self.request.session['cart']
         
         if variation_id in cart:
-            print('tem car')
-
             cart_quantity = cart[variation_id]['quantity']
             cart_quantity += 1
-            
-            print('QUANTIDADE:', cart_quantity)
-            
+                        
             if variation_stock < cart_quantity:
                 messages.warning(
                     self.request,
                     f'Insufficient quantity for {cart_quantity}x on the '
                     f'"{product_name}" product. We\'ve added {variation_stock} '
-                    f'in your shopping cart.'
+                    f'to your shopping cart.'
                 )
                 cart_quantity = variation_stock
                 
@@ -139,15 +131,21 @@ class AddToCartView(View):
             }
             
         self.request.session.save()
-        pprint(cart)
-        return HttpResponse(f'{variation.product} {variation.name}')
+        
+        messages.success(
+            self.request,
+            f'Product "{product_name} {variation_name}" added to your '
+            f'shopping cart {cart[variation_id]["quantity"]}x.'
+        )
+        
+        return redirect(http_referer)
 
 class RemoveFromCartView(View):
     def get(self, *args, **kwargs):
         return HttpResponse("RemoveFromCart")
 class CartView(View):
     def get(self, *args, **kwargs):
-        return HttpResponse("CartView")
+        return render(self.request, 'product/cart.html')
 class CheckOutView(View):
     def get(self, *args, **kwargs):
         return HttpResponse("CheckOut")
