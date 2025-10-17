@@ -11,5 +11,10 @@ def format_price_usa(value):
 
 @register.filter
 def cart_total_qty(cart):
-    '''Returns the total quantity of each item's variation in the cart'''
+    '''Returns the total quantity of each item's variation in the cart.'''
     return utils.cart_total_qty(cart)
+
+@register.filter
+def cart_totals(cart):
+    '''Return the total amount to be paid in the cart.'''
+    return utils.cart_totals(cart)
