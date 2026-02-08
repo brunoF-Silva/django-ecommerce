@@ -6,14 +6,29 @@
 <div class="row">
 
     {% if not request.user.is_authenticated %}
-    <div class="col-lg">
-        <h1>Login</h1>
+    <div class="col-lg mt-3">
+        <h4>Login</h4>
+        <p>If you are already registered, simply log in with your username and password below:</p>
+
+        <form method="POST" action="{% url 'profile:login' %}">
+            {% csrf_token %}
+            <div class="form-group mt-3">
+                <label for="UserInput1">User</label>
+                <input type="text" name="username" class="form-control mt-2" id="userInput1" aria-describedby="userHelp" placeholder="Enter your user">
+            </div>
+            <div class="form-group mt-3">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" name="password" class="form-control mt-2" id="exampleInputPassword1" placeholder="Enter your password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg mt-3">Log in</button>
+        </form>
     </div>
     {% endif %}
 
-    <div class="col-lg">
+    <div class="col-lg mt-3">
         {% block registrationtitle %}
-        <h1>Sign Up</h1>
+        <h4>Sign Up</h4>
+        <p>If you are not yet registered, please use the form below to create an account:</p>
         {% endblock %}
 
         <form method="POST" action=".">
