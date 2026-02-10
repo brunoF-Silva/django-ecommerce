@@ -59,6 +59,10 @@ class CreateProfileView(BaseProfileView):
     """View to handle new user registration."""
     def post(self, *args, **kwargs):
         if not self.userform.is_valid() or not self.profileform.is_valid():
+            messages.error(
+                self.request,
+                'There are errors in the registration form. Please check that all fields have been filled in correctly.'
+            )
             return self.rendering
         
         username = self.userform.cleaned_data.get('username')
@@ -125,7 +129,7 @@ class CreateProfileView(BaseProfileView):
             'You are logged in and can complete your purchase.'
         )
         
-        return redirect("profile:create")    
+        return redirect("product:cart")    
 
 
 class UpdateProfileView(BaseProfileView):

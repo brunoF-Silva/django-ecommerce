@@ -8,7 +8,8 @@ from django.forms import ValidationError
 
 class UserProfile(models.Model):
     '''Model to store user profile information.'''
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='profile')
     age = models.PositiveIntegerField()
     birthdate = models.DateField()
     cpf = models.CharField(max_length=11, verbose_name='CPF')
