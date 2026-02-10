@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load omfilters %}
+
+{% block title %}Order Summary | {% endblock %}
+
+{% block content %}
+
+<div class="row mb-5">
+    <div class="col-lg">
+        <h2>Order Summary</h2>
+
+        <p class="lead">User Data</p>
+        <p>If you need to edit, <a href="{% url 'profile:create' %}">click here</a></p>
+        <dl class="row">
+            <dt class="col-lg-2">First name:</dt>
+            <dd class="col-lg-4">{{ user.first_name }}</dd>
+            <dt class="col-lg-2">Last name:</dt>
+            <dd class="col-lg-4">{{ user.last_name }}</dd>
+
+            <dt class="col-lg-2">Age:</dt>
+            <dd class="col-lg-4">{{ user.profile.age }}</dd>
+            <dt class="col-lg-2">Date of birth:</dt>
+            <dd class="col-lg-4">{{ user.profile.birthdate }}</dd>
+
+            <dt class="col-lg-2">CPF (ID):</dt>
+            <dd class="col-lg-4">{{ user.profile.cpf }}</dd>
+            <dt class="col-lg-2">Email:</dt>
+            <dd class="col-lg-4">{{ user.email }}</dd>
+        </dl>
+
+        <p class="lead"></p>
+        <p>If you need to edit, <a href="{% url 'profile:create' %}">click here</a></p>
+        <dl class="row">
+            <dt class="col-lg-2">Address:</dt>
+            <dd class="col-lg-4">{{ user.profile.address }}</dd>
+            <dt class="col-lg-2">Number:</dt>
+            <dd class="col-lg-4">{{ user.profile.number }}</dd>
+
+            <dt class="col-lg-2">Complemento:</dt>
+            <dd class="col-lg-4">{{ user.profile.complement }}</dd>
+            <dt class="col-lg-2">Neighborhood:</dt>
+            <dd class="col-lg-4">{{ user.profile.neighborhood }}</dd>
+
+            <dt class="col-lg-2">City:</dt>
+            <dd class="col-lg-4">{{ user.profile.city }}</dd>
+            <dt class="col-lg-2">State:</dt>
+            <dd class="col-lg-4">{{ user.profile.state }}</dd>
+
+            <dt class="col-lg-2">ZIP code:</dt>
+            <dd class="col-lg-4">{{ user.profile.zip_code }}</dd>
+        </dl>
+    </div>
+</div>
+
+
+
+<div class="row mt-3">
+    <div class="col">
+        <h3>Shopping Cart Summary</h3>
+        <p class="lead">The products, quantities, and prices you selected.</p>
+
+        {% include 'partials/_cart.html' %}
+    </div>
+
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <p class="lead text-center"><span class="fw-bold">Cart Total:</span>
+            {{ cart|cart_totals|format_price_usa }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <a class="btn btn-block btn-primary btn-lg" href="{% url 'order:payment' %}">
+            Place Order and Pay
+        </a>
+    </div>
+</div>
+
+{% endblock %}
