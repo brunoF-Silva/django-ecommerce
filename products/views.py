@@ -13,8 +13,7 @@ from django.views import View
 from django.http import HttpResponse
 from django.contrib import messages
 from .import models
-
-
+from profiles.models import UserProfile
 
 class ProductListView(ListView):
     """Displays a paginated list of all products."""
@@ -181,6 +180,26 @@ class CheckoutView(View):
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('profile:create')
+        
+        profile = UserProfile.objects.filter(user=self.request.user).exists()
+        
+        if not profile:
+            messages.error(
+                self.request,
+                'User without a profile.'
+            )
+            return redirect('profile:create')
+        
+        if not self.request.session.get('cart'):
+            messages.error(
+                self.request,
+                'Empty cart.'
+            )
+            return redirect('product:list')
+        
+        if not self.request.user.is_authenticated:
+            return redirect('profile:create')
+                
         context = {
             'user': self.request.user,
             'cart': self.request.session['cart'],
