@@ -22,7 +22,7 @@ class ProductListView(ListView):
     model = models.Product
     template_name = "product/product_list.html"
     context_object_name = "products"
-    paginate_by = 10
+    paginate_by = 8
     ordering = ['-id']
     
 class SearchListView(ProductListView):

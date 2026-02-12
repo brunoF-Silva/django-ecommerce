@@ -6,10 +6,10 @@
     <title>{% block title %}{% endblock %}E-commerce</title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     {% include 'partials/_nav.html' %}
     
-    <main class="container mt-4 mb-4">
+    <main class="container mt-4 mb-4 flex-fill">
         {% include 'partials/_messages.html' %}
         {% block content %}{% endblock %}
     </main>
