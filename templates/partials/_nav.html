@@ -1,4 +1,4 @@
-{% load omfilters %}
+{% load bsfilters %}
 
 <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
     <div class="container-fluid px-4">
@@ -17,8 +17,8 @@
                         Account
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'order:list' %}">My Orders</a></li>
                             <li><a class="dropdown-item" href="{% url 'profile:create' %}">Profile Update</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{% url 'profile:logout' %}">Logout</a></li>
                         </ul>
