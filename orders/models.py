@@ -7,6 +7,7 @@ class Order(models.Model):
     ''' Order model '''
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total = models.FloatField()
+    total_qty = models.PositiveIntegerField()
     status = models.CharField(
         default="C",
         max_length=1,
