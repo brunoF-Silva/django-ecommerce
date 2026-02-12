@@ -9,23 +9,23 @@ from .models import Order, OrderItem
 
 from utils import utils
 
-class DispatchLoginRequired(View):
+class DispatchLoginRequiredMixin(View):
     def dispatch(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('profile:create')
         
         return super().dispatch(*args, **kwargs)
     
-class PaymentDetailView(DispatchLoginRequired, DetailView):
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(user=self.request.user)
+        return qs
+class PaymentDetailView(DispatchLoginRequiredMixin, DetailView):
     template_name = 'order/payment.html'
     model = Order
     pk_url_kwarg = 'pk'
     context_object_name = 'order'
     
-    def get_queryset(self, *args, **kwargs):
-        qs = super().get_queryset(*args, **kwargs)
-        qs = qs.filter(user=self.request.user)
-        return qs
 
 class PlaceOrderView(View):
     template_name = 'order/payment.html'
@@ -118,13 +118,18 @@ class PlaceOrderView(View):
             )
         )
 
-class OrderDetailView(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse("OrderDetail")
+class OrderDetailView(DispatchLoginRequiredMixin, DetailView):
+    model = Order
+    context_object_name = 'order'
+    template_name = 'order/detail.html'
+    pk_url_kwarg = 'pk'
 
-
-class ListOrderView(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse("List")
+class OrderListView(DispatchLoginRequiredMixin, ListView):
+    model = Order
+    context_object_name = 'orders'
+    template_name = 'order/list.html'
+    paginate_by = 10
+    ordering = ['-id']
+    
 
 
