@@ -1,3 +1,19 @@
+:root {
+    --bs-primary: #1e1e2f;
+    --bs-primary-rgb: 30, 30, 47;
+
+    --bs-secondary: #4b5563;
+    --bs-secondary-rgb: 75, 85, 99;
+}
+
+.pagination {
+    --bs-pagination-active-bg: var(--bs-secondary);
+    --bs-pagination-active-border-color: var(--bs-secondary);
+    --bs-pagination-color: var(--bs-secondary);
+    --bs-pagination-hover-color: var(--bs-secondary);
+}
+
+
 .product-price-block {
     font-size: 1.5rem;
 }
