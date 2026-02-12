@@ -12,6 +12,8 @@ from django.views.generic.detail import DetailView
 from django.views import View
 from django.http import HttpResponse
 from django.contrib import messages
+from django.db.models import Q
+
 from .import models
 from profiles.models import UserProfile
 
@@ -22,7 +24,25 @@ class ProductListView(ListView):
     context_object_name = "products"
     paginate_by = 10
     ordering = ['-id']
-
+    
+class SearchListView(ProductListView):
+    def get_queryset(self, *args, **kwargs):
+        term = self.request.GET.get('term') or self.request.session['term']
+        qs = super().get_queryset(*args, **kwargs)
+        
+        if not term:
+            return qs
+        
+        self.request.session['term'] = term
+        
+        qs = qs.filter(
+            Q(name__icontains=term) |
+            Q(short_description__icontains=term) |
+            Q(long_description__icontains=term)
+        )
+        
+        self.request.session.save()
+        return qs
 class ProductDetailView(DetailView):
     """Displays the details for a single product."""
     model = models.Product
