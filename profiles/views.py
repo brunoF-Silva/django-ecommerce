@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.views import View
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 import copy
 
 from . import models
@@ -80,11 +80,17 @@ class CreateProfileView(BaseProfileView):
             
             if password:
                 user.set_password(password)
+                password_changed = True
+            else:
+                password_changed = False
                 
             user.email = email
             user.first_name = first_name
             user.last_name = last_name
             user.save()
+
+            if password_changed:
+                update_session_auth_hash(self.request, user)
             
             if not self.profile:
                 self.profileform.cleaned_data['user'] = user
@@ -109,12 +115,12 @@ class CreateProfileView(BaseProfileView):
             if password:
                 authenticated_user = authenticate(
                     self.request,
-                    username=user,
+                    username=user.username,
                     password=password
                 )
-                
+
                 if authenticated_user:
-                    login(self.request, user=user)
+                    login(self.request, user=authenticated_user)
             
         self.request.session['cart'] = self.cart
         self.request.session.save()

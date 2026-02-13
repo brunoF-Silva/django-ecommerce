@@ -17,7 +17,10 @@
 
 <div class="row mt-4">
     <div class="col">
-        <a href="#" class="btn btn-secondary w-100 btn-lg">Pay</a>
+        <form method="post" action="{% url 'order:payment' order.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-secondary w-100 btn-lg" type="submit">Pay</button>
+        </form>
     </div>
 </div>
 

@@ -85,7 +85,7 @@ class UserForm(forms.ModelForm):
             if not password2_data:
                 validation_error_msgs['password2'] = error_msg_password_match
             
-            if password2_data != password2_data:
+            if password_data != password2_data:
                 validation_error_msgs['password'] = error_msg_password_match
                 validation_error_msgs['password2'] = error_msg_password_match
                 
