@@ -26,6 +26,15 @@ class PaymentDetailView(DispatchLoginRequiredMixin, DetailView):
     pk_url_kwarg = 'pk'
     context_object_name = 'order'
     
+    def post(self, request, *args, **kwargs):
+        order = self.get_object()
+        messages.success(
+            request,
+            'Payment successful! Thank you for shopping with us.'
+        )
+        return redirect('product:list')
+
+    
 
 class PlaceOrderView(View):
     template_name = 'order/payment.html'
